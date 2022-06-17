@@ -1,5 +1,5 @@
 resource "google_compute_network" "vpc" {
-  name          =  var.vpc-name
+  name          =  var.vpc_name
   auto_create_subnetworks = "false"  // VPC de tipo custom
 }
 # resource "google_compute_firewall" "allow-internal" {
