@@ -21,3 +21,11 @@ variable "cidr_range_subnet_for_cloud_sql" {
   type        = string
   default     = "10.1.0.0/23"
 }
+
+variable "vpc_name" {
+}
+
+variable "region"{
+}
+
+
