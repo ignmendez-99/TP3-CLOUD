@@ -1,8 +1,9 @@
 terraform {
   # ... other configuration ...
   required_providers {
-    google-beta = {
-      version = "~> 4.19.0"
+    google = {
+      source = "hashicorp/google"
+      version = "3.5.0"
     }
   }
 }
