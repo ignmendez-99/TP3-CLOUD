@@ -17,7 +17,7 @@ module "gcs" {
   source = "./modules/gcs"
   bucket_name = "www.the-stocker.com"
   storage_class = "STANDARD"
-  path = "../../resources/html"
+  path = "./resources/html"
   region = var.region
   objects = local.gcs.objects
 }
@@ -25,7 +25,7 @@ module "gcs" {
 module "dns"{ 
   source = "./modules/dns"
   name = "the-stocker-dns-zone"
-  dns_name = "the-stocker.com"
+  dns_name = "the-stocker.com."
   dns_TTL = 300
   depends_on = [
     module.gcs

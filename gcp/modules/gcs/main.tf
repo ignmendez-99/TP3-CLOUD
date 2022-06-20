@@ -59,6 +59,6 @@ resource "google_storage_bucket_object" "gcs_object" {
   content_type  = each.value.content_type
 
   depends_on = [
-    google_storage_bucket_access_control.public_rule,
+    google_storage_bucket.bucket
   ]
 }
