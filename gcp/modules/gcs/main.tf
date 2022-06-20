@@ -8,8 +8,6 @@ resource "google_storage_bucket" "bucket" {
     enabled     = true
   }
 
-  uniform_bucket_level_access = true
-
   website {
     main_page_suffix = "index.html"
     not_found_page   = "error.html"
@@ -42,7 +40,7 @@ resource "google_storage_bucket" "bucket" {
 #   }
 }
 
-resource "google_storage_default_object_access_control" "public_rule" {
+resource "google_storage_bucket_access_control" "public_rule" {
   #count = var.website ? 1 : 0
   bucket = google_storage_bucket.bucket.name
   role   = "READER"
@@ -61,6 +59,6 @@ resource "google_storage_bucket_object" "gcs_object" {
   content_type  = each.value.content_type
 
   depends_on = [
-    google_storage_default_object_access_control.public_rule,
+    google_storage_bucket_access_control.public_rule,
   ]
 }
