@@ -1,25 +1,26 @@
-# locals {
-#   bucket_name = "www.the-stocker.com"
-#   path        = "resources"
+locals {
 
-#   gcs = {
+    gcs = {
+        objects = {
+            index = {
+                filename = "index.html"
+                content_type = "text/html"
+            }
+            error = {
+                filename = "error.html"
+                content_type = "text/html"
+            }
+        }
+    }
 
-#     # 1 - Website
-#     website = {
-#       bucket_name = local.bucket_name
-#       path        = "resources"
-
-#       objects = {
-#         index = {
-#           filename     = "html/index.html"
-#           content_type = "text/html"
-#         }
-#         error = {
-#           filename     = "html/error.html"
-#           content_type = "text/html"
-#         }
-#       }
-#     }
-
-#   }
-# }
+    subnets = tomap({
+        for_load_balancer = {
+            name = "the-stocker-subnet-for-load-balancer"
+            cidr_range = "10.0.0.0/27"
+        }
+        for_cloud_sql = {
+            name = "the-stocker-subnet-for-cloud-sql"
+            cidr_range = "10.1.0.0/23"
+        }
+    })
+}
