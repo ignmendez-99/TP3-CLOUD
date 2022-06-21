@@ -9,40 +9,44 @@ produces:
   - application/json
 paths:
   /api/user-service:
+    get:
       summary: user-service
       operationId: user-service
       x-google-backend:
-        address: https://hello-abc1def2gh-uc.a.run.app
+        address: https://user-service-xchu4qb5ca-uc.a.run.app
       responses:
         200:
           description: Successful response
           schema:
               type: string
   /api/post-service:
+    get:
       summary: post-service
       operationId: post-service
       x-google-backend:
-        address: https://hello-abc1def2gh-uc.a.run.app
+        address: https://post-service-xchu4qb5ca-uc.a.run.app
       responses:
         200:
           description: Successful response
           schema:
               type: string
   /api/ama-service:
+    get:
       summary: ama-service
       operationId: ama-service
       x-google-backend:
-        address: https://hello-abc1def2gh-uc.a.run.app
+        address: https://ask-me-anything-service-xchu4qb5ca-uc.a.run.app
       responses:
         200:
           description: Successful response
           schema:
               type: string
   /api/feed-service:
+    get:
       summary: feed-service
       operationId: feed-service
       x-google-backend:
-        address: https://hello-abc1def2gh-uc.a.run.app
+        address: https://feed-service-xchu4qb5ca-uc.a.run.app
       responses:
         200:
           description: Successful response

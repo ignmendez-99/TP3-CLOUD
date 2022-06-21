@@ -4,13 +4,26 @@ resource "google_dns_managed_zone" "dns" {
   visibility = "public"
 }
 
-resource "google_dns_record_set" "a" {
+resource "google_dns_record_set" "bucket_dns_record" {
   name         = google_dns_managed_zone.dns.dns_name
   managed_zone = google_dns_managed_zone.dns.name
   type         = "A"
   ttl          = var.dns_TTL
 
-  rrdatas = [var.LB_static_ip]
+  rrdatas = [var.LB_bucket_static_ip]
+
+  depends_on = [
+    google_dns_managed_zone.dns
+  ]
+}
+
+resource "google_dns_record_set" "backend_dns_record" {
+  name         = google_dns_managed_zone.dns.dns_name
+  managed_zone = google_dns_managed_zone.dns.name
+  type         = "A"
+  ttl          = var.dns_TTL
+
+  rrdatas = [var.LB_backend_static_ip]
 
   depends_on = [
     google_dns_managed_zone.dns

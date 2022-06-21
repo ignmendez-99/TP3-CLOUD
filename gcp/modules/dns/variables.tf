@@ -12,7 +12,12 @@ variable "dns_TTL" {
   description = "DNS time to live"
 }
 
-variable "LB_static_ip" {
-  description = "Static IP´of the LB"
+variable "LB_bucket_static_ip" {
+  description = "Static IP of the LB of the bucket"
+  type = string
+}
+
+variable "LB_backend_static_ip" {
+  description = "Static IP of the LB of the backend service"
   type = string
 }
