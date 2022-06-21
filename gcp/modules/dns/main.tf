@@ -10,6 +10,10 @@ resource "google_dns_record_set" "a" {
   type         = "A"
   ttl          = var.dns_TTL
 
-  rrdatas = ["8.8.8.8"]
+  rrdatas = [var.LB_static_ip]
+
+  depends_on = [
+    google_dns_managed_zone.dns
+  ]
 }
 

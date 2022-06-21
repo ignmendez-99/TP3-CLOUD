@@ -11,3 +11,8 @@ variable "dns_name" {
 variable "dns_TTL" {
   description = "DNS time to live"
 }
+
+variable "LB_static_ip" {
+  description = "Static IP´of the LB"
+  type = string
+}

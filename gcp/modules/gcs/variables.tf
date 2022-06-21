@@ -8,8 +8,8 @@ variable "storage_class" {
   type        = string
 }
 
-variable "path" {
-  description = "Path to website files"
+variable "resources" {
+  description = "Path to resources files"
   type        = string
 }
 
@@ -21,4 +21,19 @@ variable "objects" {
 variable "region" {
   description = "Region of the bucket"
   type        = string
+}
+
+variable "certificate" {
+  description = "Name of the certificate"
+  type        = string
+}
+
+variable "key" {
+  description = "Name of the key"
+  type        = string
+}
+
+variable "static_ip_name" {
+  description = "Static IP name"
+  type = string
 }
