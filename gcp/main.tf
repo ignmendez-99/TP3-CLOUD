@@ -84,3 +84,18 @@ module "dns"{
     module.gcs
   ]
 }
+
+module "cloud_sql" {
+  source = "./modules/cloud_sql"
+
+  #VARIABLES
+  database_name = "the-stocker-database"
+  database_instance_name = "the-stocker-database-instance"
+  vpc_self_link = module.vpc.vpc_self_link
+
+  # Depende de la VPC y subnets para crear el Private Access
+  depends_on = [
+    module.vpc,
+    module.subnets
+  ]
+}
