@@ -13,7 +13,7 @@ paths:
       summary: user-service
       operationId: user-service
       x-google-backend:
-        address: https://user-service-xchu4qb5ca-uc.a.run.app
+        address: ${user_service_url}
       responses:
         200:
           description: Successful response
@@ -24,7 +24,7 @@ paths:
       summary: post-service
       operationId: post-service
       x-google-backend:
-        address: https://post-service-xchu4qb5ca-uc.a.run.app
+        address: ${post_service_url}
       responses:
         200:
           description: Successful response
@@ -35,7 +35,7 @@ paths:
       summary: ama-service
       operationId: ama-service
       x-google-backend:
-        address: https://ask-me-anything-service-xchu4qb5ca-uc.a.run.app
+        address: ${ama_service_url}
       responses:
         200:
           description: Successful response
@@ -46,7 +46,7 @@ paths:
       summary: feed-service
       operationId: feed-service
       x-google-backend:
-        address: https://feed-service-xchu4qb5ca-uc.a.run.app
+        address: ${feed_service_url}
       responses:
         200:
           description: Successful response

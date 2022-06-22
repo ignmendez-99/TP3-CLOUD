@@ -16,8 +16,3 @@ variable "LB_bucket_static_ip" {
   description = "Static IP of the LB of the bucket"
   type = string
 }
-
-variable "LB_backend_static_ip" {
-  description = "Static IP of the LB of the backend service"
-  type = string
-}

@@ -35,14 +35,13 @@ module "gateway" {
   source = "./modules/gateway"
   api_file_path = "./resources/gateway/api.yaml"
   static_ip_name = "load-balancer-for-gateway-static-ip"
-  api_id = "api_gw"
-  api_config_id = "api_gw_config"
-  api_gw_id = "api_gw_gw"
+  api_id = "api-gw"
+  api_config_id = "api-gw-config"
+  api_gw_id = "api-gw-gw"
   resources = "./resources"
   certificate = local.ssl.certificate.filename
   key = local.ssl.key.filename
 
-  # service_addresses = module.cloud_run.service_addresses
   user_service_address = module.cloud_run.user_service_address
   post_service_address = module.cloud_run.post_service_address
   ama_service_address = module.cloud_run.ama_service_address
@@ -60,10 +59,8 @@ module "dns"{
   dns_TTL = 300
 
   LB_bucket_static_ip = module.gcs.LB_static_ip
-  LB_backend_static_ip = module.gateway.LB_static_ip
 
   depends_on = [
-    module.gcs,
-    module.gateway
+    module.gcs
   ]
 }
