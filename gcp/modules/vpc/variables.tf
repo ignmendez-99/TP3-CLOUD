@@ -9,5 +9,6 @@ variable "vpc_acccess_connector_name" {
 }
 
 variable "vpc_access_connector_ip_cidr_range" {
+  description = "VPC Access Connector CIDR range"
   type = string
 }

@@ -26,16 +26,16 @@ resource "google_cloud_run_service" "service" {
 #########################
 #       IAM POLICY      # (comentar para poder hacer el terraform apply, ya que nos tira error 403)
 #########################
-# resource "google_cloud_run_service_iam_binding" "binding" {
-#   for_each = var.services
-#   service     = each.value.name
-#   location = var.region
+resource "google_cloud_run_service_iam_binding" "binding" {
+  for_each = var.services
+  service     = each.value.name
+  location = var.region
 
-#   role = "roles/run.invoker"
-#   members = [
-#     "allUsers",
-#   ]
-#   depends_on = [
-#     google_cloud_run_service.service
-#   ]
-# }
+  role = "roles/run.invoker"
+  members = [
+    "allUsers",
+  ]
+  depends_on = [
+    google_cloud_run_service.service
+  ]
+}

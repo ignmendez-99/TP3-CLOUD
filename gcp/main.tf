@@ -23,6 +23,8 @@ module "subnets" {
 
 module "gcs" {
   source = "./modules/gcs"
+
+  # VARIABLES
   bucket_name = "www.the-stocker.com"
   storage_class = "STANDARD"
   resources = "./resources"

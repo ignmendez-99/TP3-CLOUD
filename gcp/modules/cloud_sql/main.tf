@@ -8,9 +8,11 @@ resource "google_sql_database_instance" "instance" {
   database_version = "POSTGRES_14"
   
   depends_on = [
-    # google_service_networking_connection.private_vpc_connection,
+    google_service_networking_connection.private_vpc_connection,
     google_compute_global_address.private_ip_address
   ]
+
+  deletion_protection = false
 
   settings {
     tier = "db-f1-micro"
@@ -19,10 +21,10 @@ resource "google_sql_database_instance" "instance" {
       point_in_time_recovery_enabled = true
       transaction_log_retention_days = 7
     }
-    # ip_configuration {
-    #   ipv4_enabled    = false
-    #   private_network = var.vpc_self_link
-    # }
+    ip_configuration {
+      ipv4_enabled    = false
+      private_network = var.vpc_self_link
+    }
   }
 }
 
@@ -39,15 +41,15 @@ resource "google_compute_global_address" "private_ip_address" {
 ################################
 # conexion privada a cloud sql #  (comentar para poder hacer el terraform apply, ya que lanza error 403)
 ################################
-# resource "google_service_networking_connection" "private_vpc_connection" {
-#   network                 = var.vpc_self_link
-#   service                 = "servicenetworking.googleapis.com"
-#   reserved_peering_ranges = [google_compute_global_address.private_ip_address.name]
+resource "google_service_networking_connection" "private_vpc_connection" {
+  network                 = var.vpc_self_link
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = [google_compute_global_address.private_ip_address.name]
 
-#   depends_on = [
-#     google_compute_global_address.private_ip_address
-#   ]
-# }
+  depends_on = [
+    google_compute_global_address.private_ip_address
+  ]
+}
 
 resource "random_integer" "rnd" {
   min = 1

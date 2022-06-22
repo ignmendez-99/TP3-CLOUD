@@ -95,52 +95,52 @@ resource "google_compute_global_address" "static_ip" {
 #########################
 #    SSL CERTIFICATE    #  (comentar para poder hacer el terraform apply, ya que no tenemos certificados)
 #########################
-# resource "google_compute_ssl_certificate" "ssl" {
-#   name        = "${google_storage_bucket.bucket.name}-ssl-certificate"
-#   private_key = file("${var.resources}/${var.key}")
-#   certificate = file("${var.resources}/${var.certificate}")
-#   depends_on = [
-#     google_storage_bucket.bucket
-#   ]
-# }
+resource "google_compute_ssl_certificate" "ssl" {
+  name        = "${google_storage_bucket.bucket.name}-ssl-certificate"
+  private_key = file("${var.resources}/${var.key}")
+  certificate = file("${var.resources}/${var.certificate}")
+  depends_on = [
+    google_storage_bucket.bucket
+  ]
+}
 
 #########################
 #     HTTPS URL_MAP     #  (comentar para poder hacer el terraform apply, ya que no tenemos certificados)
 #########################
-# resource "google_compute_url_map" "static_https" {
-#   name        = "${google_storage_bucket.bucket.name}-url-map"
-#   default_service = google_compute_backend_bucket.backend_bucket.id
-#   depends_on = [
-#     google_compute_backend_bucket.backend_bucket
-#   ]
-# }
+resource "google_compute_url_map" "static_https" {
+  name        = "${google_storage_bucket.bucket.name}-url-map-https"
+  default_service = google_compute_backend_bucket.backend_bucket.id
+  depends_on = [
+    google_compute_backend_bucket.backend_bucket
+  ]
+}
 
 #########################
 #      HTTPS PROXY      #  (comentar para poder hacer el terraform apply, ya que no tenemos certificados)
 #########################
-# resource "google_compute_target_https_proxy" "static_https" {
-#   name             = "${var.bucket_name}-static-https-proxy"
-#   url_map          = google_compute_url_map.static_https.id
-#   ssl_certificates = [google_compute_ssl_certificate.ssl.id]
-#   depends_on = [
-#     google_compute_ssl_certificate.ssl,
-#     google_compute_url_map.static_https
-#   ]
-# }
+resource "google_compute_target_https_proxy" "static_https" {
+  name             = "${var.bucket_name}-static-https-proxy"
+  url_map          = google_compute_url_map.static_https.id
+  ssl_certificates = [google_compute_ssl_certificate.ssl.id]
+  depends_on = [
+    google_compute_ssl_certificate.ssl,
+    google_compute_url_map.static_https
+  ]
+}
 
 #########################
 # HTTPS FORWARDING RULE #  (comentar para poder hacer el terraform apply, ya que no tenemos certificados)
 #########################
-# resource "google_compute_global_forwarding_rule" "static_https" {
-#   name       = "${var.bucket_name}-static-forwarding-rule-https"
-#   target     = google_compute_target_https_proxy.static_https.id
-#   port_range = "443"
-#   ip_address = google_compute_global_address.static_ip.id
-#   depends_on = [
-#     google_compute_target_https_proxy.static_https,
-#     google_compute_global_address.static_ip
-#   ]
-# }
+resource "google_compute_global_forwarding_rule" "static_https" {
+  name       = "${var.bucket_name}-static-forwarding-rule-https"
+  target     = google_compute_target_https_proxy.static_https.id
+  port_range = "443"
+  ip_address = google_compute_global_address.static_ip.id
+  depends_on = [
+    google_compute_target_https_proxy.static_https,
+    google_compute_global_address.static_ip
+  ]
+}
 
 
 #########################
