@@ -18,6 +18,7 @@ resource "google_cloud_run_service" "service" {
   metadata {
       annotations = {
         "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
+        "run.googleapis.com/vpc-access-connector" = var.vpc_access_connector_name
       }
     }
 }

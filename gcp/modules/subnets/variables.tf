@@ -8,11 +8,6 @@ variable "region"{
   type        = string
 }
 
-
-variable subnets {
-  description = "Subnets object with properties"
-  type = map(object({
-          name = string
-          cidr_range = string
-        }))
+variable subnet_for_cloud_sql {
+  description = "Subnet for cloud SQL"
 }

@@ -1,9 +1,9 @@
 resource "google_compute_subnetwork" "subnet" {
-  for_each = var.subnets
-  name = each.value.name
-  ip_cidr_range = each.value.cidr_range
+  name = var.subnet_for_cloud_sql.name
+  ip_cidr_range = var.subnet_for_cloud_sql.cidr_range
   network      = var.vpc_name
   region        = var.region
+  private_ip_google_access = true
 
   log_config {
     aggregation_interval = "INTERVAL_30_SEC"

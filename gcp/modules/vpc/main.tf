@@ -2,42 +2,26 @@ resource "google_compute_network" "vpc" {
   name          =  var.vpc_name
   auto_create_subnetworks = "false"  // VPC de tipo custom
 }
-# resource "google_compute_firewall" "allow-internal" {
-#   name    = "${var.company}-fw-allow-internal"
-#   network = "${google_compute_network.vpc.name}"
-#   allow {
-#     protocol = "icmp"
-#   }
-#   allow {
-#     protocol = "tcp"
-#     ports    = ["0-65535"]
-#   }
-#   allow {
-#     protocol = "udp"
-#     ports    = ["0-65535"]
-#   }
-#   source_ranges = [
-#     "${var.var_uc1_private_subnet}",
-#     "${var.var_ue1_private_subnet}",
-#     "${var.var_uc1_public_subnet}",
-#     "${var.var_ue1_public_subnet}"
-#   ]
-# }
-# resource "google_compute_firewall" "allow-http" {
-#   name    = "${var.company}-fw-allow-http"
-#   network = "${google_compute_network.vpc.name}"
-#   allow {
-#     protocol = "tcp"
-#      ports    = ["80"]
-#   }
-#   target_tags = ["http"] 
-# }
-# resource "google_compute_firewall" "allow-bastion" {
-#   name    = "${var.company}-fw-allow-bastion"
-#   network = "${google_compute_network.vpc.name}"
-#   allow {
-#     protocol = "tcp"
-#     ports    = ["22"]
-#   }
-#   target_tags = ["ssh"]
-# }
+
+
+####################
+# Todo lo siguiente es para conseguir Serverless Access Connector
+####################
+
+resource "google_project_service" "vpcaccess_api" {
+  service  = "vpcaccess.googleapis.com"
+  provider = google-beta
+  disable_on_destroy = false
+}
+
+# VPC access connector
+resource "google_vpc_access_connector" "connector" {
+  name          = var.vpc_acccess_connector_name
+  provider      = google-beta
+  network       = google_compute_network.vpc.name
+  ip_cidr_range = var.vpc_access_connector_ip_cidr_range
+  depends_on    = [
+    google_project_service.vpcaccess_api,
+    google_compute_network.vpc
+  ]
+}
